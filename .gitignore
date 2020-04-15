@@ -1,0 +1,7 @@
+**/build
+**/debug
+**/dist
+*.dis
+*.elf
+*.hex
+*.map
