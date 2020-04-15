@@ -12,10 +12,10 @@
       <itemPath>include/isr.h</itemPath>
       <itemPath>include/platform.h</itemPath>
       <itemPath>include/preprocessor.h</itemPath>
-      <itemPath>config.h</itemPath>
-      <itemPath>eeprom.h</itemPath>
-      <itemPath>task.h</itemPath>
-      <itemPath>motor.h</itemPath>
+      <itemPath>include/config.h</itemPath>
+      <itemPath>include/eeprom.h</itemPath>
+      <itemPath>include/motor.h</itemPath>
+      <itemPath>include/task.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

@@ -80,7 +80,7 @@ typedef enum {
 // Service message
 typedef enum {
     ServiceSetId = 1,
-    ServiceReserved = 2,
+    ServiceSetPitch = 2,
     ServiceUpdate = 3,
     ServiceSaveCounters = 4,
     ServiceGetCounters = 5,
@@ -189,7 +189,7 @@ static uint8_t feed() {
     _time_delta = 0;
     
     // Start move motor
-    motor_ccw();
+    motor_cw();
 
     while ((detected_holes < pitch_holes) && (ok)) {
         ok = _time_delta < timeout;
@@ -210,7 +210,7 @@ static uint8_t feed() {
 static void unroll(void) {
     update_status(StatusOnUnroll);
 
-    motor_cw();
+    motor_ccw();
     while (!gpio_pin_get(BUTTON2, 1));
     motor_stop();
 
@@ -273,6 +273,11 @@ static void process_service_msg(can_frame_t *cf) {
             eeprom_write8(FEEDER_ID, feeder_id);
             
             update_status(StatusUnknown);
+        } else if ((msg.type == ServiceSetPitch) && (status == StatusReady)) {
+            feeder_pitch = msg.data;
+            
+            eeprom_write8(FEEDER_PITCH, feeder_pitch);
+                    
         } else if ((msg.type == ServiceUpdate) && (status == StatusReady)) {
             if (msg.data == feeder_id) {
                 asm("reset");

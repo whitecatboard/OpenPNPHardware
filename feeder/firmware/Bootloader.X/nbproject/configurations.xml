@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>../Feeder.X/include/can.h</itemPath>
-      <itemPath>../Feeder.X/include/config.h</itemPath>
-      <itemPath>../Feeder.X/include/eeprom.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -26,8 +23,8 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../Feeder.X</Elem>
     <Elem>.</Elem>
+    <Elem>../Feeder.X</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -76,7 +73,7 @@
         <property key="default-char-type" value="true"/>
         <property key="define-macros" value=""/>
         <property key="disable-optimizations" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="..\Feeder.X\include"/>
         <property key="favor-optimization-for" value="-speed,+space"/>
         <property key="garbage-collect-data" value="true"/>
         <property key="garbage-collect-functions" value="true"/>
