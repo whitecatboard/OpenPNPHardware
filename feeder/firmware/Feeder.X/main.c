@@ -89,7 +89,8 @@ typedef enum {
 
 typedef struct {
     service_msg_type_t type; // Type of service message
-    uint8_t data;            // Message data
+    uint8_t data0;           // Message data 0
+    uint8_t data1;           // Message data 1
 } service_msg_t;
 
 // Feed message
@@ -171,7 +172,6 @@ static void update_status(feeder_status_t new_status) {
 
 static uint8_t feed() {  
     uint8_t ok = 1;
-    uint16_t timeout = FEED_TIMEOUT;
     
     // Reset number of detected holes
     detected_holes = 0; 
@@ -184,6 +184,9 @@ static uint8_t feed() {
         case Pitch_3:   pitch_holes = 3; break;
         case Pitch_4:   pitch_holes = 4; break;
     }    
+
+    // Set timeout
+    uint16_t timeout = FEED_TIMEOUT * pitch_holes;
     
     // Reset time
     _time_delta = 0;
@@ -268,27 +271,28 @@ static void process_service_msg(can_frame_t *cf) {
         memcpy(&msg, cf->data, cf->dlc);
         
         if ((msg.type == ServiceSetId) && (status == StatusWaitForConfig)) {
-            feeder_id = msg.data;
+            feeder_id = msg.data0;
             
             eeprom_write8(FEEDER_ID, feeder_id);
             
             update_status(StatusUnknown);
         } else if ((msg.type == ServiceSetPitch) && (status == StatusReady)) {
-            feeder_pitch = msg.data;
+            if (feeder_id == msg.data0) {
+                feeder_pitch = msg.data1;
             
-            eeprom_write8(FEEDER_PITCH, feeder_pitch);
-                    
+                eeprom_write8(FEEDER_PITCH, feeder_pitch);                
+            }
         } else if ((msg.type == ServiceUpdate) && (status == StatusReady)) {
-            if (msg.data == feeder_id) {
+            if (msg.data0 == feeder_id) {
                 asm("reset");
             }
         } else if ((msg.type == ServiceSaveCounters) && (status == StatusReady)) {
-            if (msg.data == feeder_id) {
+            if (msg.data0 == feeder_id) {
                 eeprom_write32(FEED_OK, feed_ok);
                 eeprom_write32(FEED_ERR, feed_err);
             }
         } else if ((msg.type == ServiceGetCounters) && (status == StatusReady)) {
-           if (msg.data == feeder_id) {               
+           if (msg.data0 == feeder_id) {               
                 // Send counters
                 can_frame_t response;
                 
@@ -319,7 +323,7 @@ static void process_service_msg(can_frame_t *cf) {
                 task_enable();
             }
         } else if ((msg.type == ServiceResetCounters) && (status == StatusReady)) {
-           if (msg.data == feeder_id) {         
+           if (msg.data0 == feeder_id) {         
                feed_ok = 0;
                feed_err = 0;
                
