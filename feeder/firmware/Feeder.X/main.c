@@ -192,7 +192,7 @@ static uint8_t feed() {
     _time_delta = 0;
     
     // Start move motor
-    motor_cw();
+    motor_ccw();
 
     while ((detected_holes < pitch_holes) && (ok)) {
         ok = _time_delta < timeout;
@@ -213,7 +213,7 @@ static uint8_t feed() {
 static void unroll(void) {
     update_status(StatusOnUnroll);
 
-    motor_ccw();
+    motor_cw();
     while (!gpio_pin_get(BUTTON2, 1));
     motor_stop();
 
