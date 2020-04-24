@@ -8,4 +8,4 @@ On this repository you will find all the relevant information about our P&P mach
 
 * The machine
 * Control board
-* Feeders
+* [Feeders](https://github.com/whitecatboard/OpenPNPHardware/tree/master/feeder)
