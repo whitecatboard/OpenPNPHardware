@@ -7,4 +7,4 @@ If you have enough money, you can buy feeders used in the industry by US $130 ea
 * We need to mount at least 40 feeders on our machine, and we don't have US $5,200.
 * Usually these feeders are pneumatic feeders, and a lot of additional noisy hardware is required (more money).
 
-For the above reasons, we decided to work in our own feeder solution, after review the [Volker Besmens's project](https://www.vbesmens.de/en/pick-and-place/automatic-feeder.html). 
+For the above reasons, we decided to work in our own feeder solution, after reviewing the [Volker Besmens's project](https://www.vbesmens.de/en/pick-and-place/automatic-feeder.html). 
